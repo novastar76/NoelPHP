@@ -10,7 +10,38 @@
   </body>
 </html>
 
-
+<h1>Pour nous contacter</h1>
 <?php
+if (isset($_POST['formulaire'])) {
+  $nom = checkInput($_POST['nom']);
+  $prenom = checkInput($_POST['prenom']);
+  $email = checkInput($_POST['email']);
+  $msg = checkInput($_POST['msg']);
 
-require './includes/formulaire.php';
+  $erreur = array();
+
+  if ($nom === "") {
+    array_push($erreur, "Veuillez saisir votre nom");
+
+  if ($prenom === "")
+    array_push($erreur, "Veuillez saisir un prénom");
+
+  if ($email === "")
+    array_push($erreur, "Veuillez saisir une adresse e-mail");
+
+  if ($msg === "")
+    array_push($erreur, "Veuillez saisir un message");
+}
+
+  if (count($erreur) > 0) {
+    echo "erreurs !!!";
+
+  }
+
+  else {
+    echo "Insertion en BDD";
+  }
+}
+  else {
+    require './includes/formulaire.php';
+}
