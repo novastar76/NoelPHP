@@ -34,7 +34,11 @@ if (isset($_POST['formulaire'])) {
 }
 
   if (count($erreur) > 0) {
-    echo "erreurs !!!";
+    $message = '<ul>';
+
+
+
+    $message .= '</ul>';
 
   }
 
