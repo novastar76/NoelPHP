@@ -30,7 +30,7 @@ if (isset($_POST['formulaire'])) {
     array_push($erreur, "Veuillez saisir une adresse e-mail");
 
   if ($msg === "")
-    array_push($erreur, "Veuillez saisir un message");
+    array_push($erreur, "Veuillezl saisir un message");
 }
 
   if (count($erreur) > 0) {
