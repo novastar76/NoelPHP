@@ -36,9 +36,17 @@ if (isset($_POST['formulaire'])) {
   if (count($erreur) > 0) {
     $message = '<ul>';
 
-
+    for($i = 0 ; $i < count($erreur) ; $i++) {
+      $message .= '<li>';
+      $message .= $erreur[$i];
+      $message .= '</li>';
+    }
 
     $message .= '</ul>';
+
+    echo $message;
+
+    require 'formulaire.php';
 
   }
 
@@ -46,6 +54,26 @@ if (isset($_POST['formulaire'])) {
     echo "Insertion en BDD";
   }
 }
-  else {
-    require './includes/formulaire.php';
+
+else {
+  $nom = $prenom = $email = $msg = "";
+  require 'formulaire.php';
 }
+      $sqlVerif = "SELECT COUNT(*) FROM clients
+      WHERE mail='" . $email ."'";
+      $nbrOccurences = $pdo->query($sqlVerif)->fetchColumn();
+      if ($nbrOccurences > 0) {
+        echo "Déjà dans la base";
+      }
+      else {
+          $sql = "INSERT INTO clients
+          (nom, prenom, mail, message)
+          VALUES ('" . $nom . "', '" . $prenom . "', '" . $email ."', '" . $msg ."')";
+          $query = $pdo->prepare($sql);
+          $query->bindValue('nom', $nom, PDO::PARAM_STR);
+          $query->bindValue('prenom', $prenom, PDO::PARAM_STR);
+          $query->bindValue('email', $email, PDO::PARAM_STR);
+          $query->bindValue('message', $msg, PDO::PARAM_STR);
+          $query->execute();
+          echo "Enregistrement OK";
+        }
